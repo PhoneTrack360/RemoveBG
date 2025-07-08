@@ -1,66 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Image Prep Tool</title>
-  <style>
-    body { font-family: sans-serif; padding: 2rem; }
-    input, button { margin: 1rem 0; display: block; }
-    canvas, img { max-width: 100%; margin-top: 1rem; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TrustChain Global Corp - Asset Verification Report</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h2>Auto Prep Image for OpenAI Editing</h2>
-  <input type="file" id="imageInput" accept="image/*">
-  <button onclick="processImage()">Remove Background & Make Square</button>
-  <br>
-  <canvas id="canvas" style="display:none;"></canvas>
-  <img id="preview" alt="Preview will appear here">
-  <br>
-  <a id="downloadLink" download="transparent_square.png">Download Transparent PNG</a>
+<body class="bg-gray-50 text-gray-800 font-sans p-4 sm:p-8">
 
-  <script>
-    async function processImage() {
-      const fileInput = document.getElementById('imageInput');
-      const file = fileInput.files[0];
-      if (!file) return alert('Please upload an image.');
+  <!-- Header with Logo -->
+  <header class="flex flex-col sm:flex-row justify-between items-center mb-10 border-b pb-4">
+    <div class="flex items-center space-x-3">
+      <!-- Inline SVG Logo -->
+      <svg class="w-12 h-12 text-blue-600" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="4"/>
+        <path d="M30 50 L50 30 L70 50 L50 70 Z" fill="currentColor"/>
+        <text x="50%" y="90%" text-anchor="middle" font-size="10" fill="currentColor" font-family="Arial">TCGC</text>
+      </svg>
+      <div>
+        <h1 class="text-2xl font-bold text-blue-700">TrustChain Global Corp</h1>
+        <p class="text-sm text-gray-600">570 North Park Boulevard, Oakville ON L6M 0N7, Canada</p>
+        <p class="text-sm text-gray-600">Registration: 770891505RC0001 | Corp #: 13443787</p>
+      </div>
+    </div>
+    <div class="mt-4 sm:mt-0 text-sm text-right">
+      <p><strong>Date:</strong> July 8, 2025</p>
+      <p><strong>Prepared for:</strong> Elina Chen</p>
+    </div>
+  </header>
 
-      const formData = new FormData();
-      formData.append("image_file", file);
-      formData.append("size", "auto");
+  <!-- Title -->
+  <h2 class="text-xl sm:text-2xl font-semibold mb-6 text-center text-gray-800 uppercase">
+    Comprehensive Asset Verification Report
+  </h2>
 
-      const response = await fetch('https://api.remove.bg/v1.0/removebg', {
-        method: 'POST',
-        headers: {
-          'X-Api-Key': "fZA2VT37MBjciGpSCeDkV1Nc"
-        },
-        body: formData
-      });
+  <!-- Section -->
+  <section class="mb-8">
+    <h3 class="text-lg font-semibold text-blue-700 mb-2">I. Overview</h3>
+    <p>
+      Following a structured due diligence and verification process conducted on July 4, 2025,
+      with BTCSG LTD, we confirm that Elina Chen’s custodial asset—298 BTC—is verifiably held
+      under BTCSG LTD’s control.
+    </p>
+  </section>
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error(errorText);
-        return alert('Error removing background. Check console for details.');
-      }
+  <section class="mb-8">
+    <h3 class="text-lg font-semibold text-blue-700 mb-2">II. Wallet Verification</h3>
+    <p>
+      Verified BTC Custody Wallet Address: 
+      <code class="bg-gray-200 px-2 py-1 rounded">19oLGXykNUBj8f7w1tT9emuaEbaSFj1p27</code><br/>
+      Wallet Balance: <strong>5,630.89041667 BTC</strong> (confirmed via blockchain explorer).
+    </p>
+  </section>
 
-      const blob = await response.blob();
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.getElementById('canvas');
-        const size = Math.max(img.width, img.height);
-        canvas.width = size;
-        canvas.height = size;
+  <section class="mb-8">
+    <h3 class="text-lg font-semibold text-blue-700 mb-2">III. Micro-Transaction Verification</h3>
+    <ul class="list-disc list-inside space-y-1">
+      <li>July 1, 2025 – 0.00003200 BTC <br />
+        TX: <code class="bg-gray-200 px-1 rounded">0a12bf6c390ec21de53481243bff058f9cfcc8a589118c605e09303c741d5a28</code></li>
+      <li>July 4, 2025 – 0.00003200 BTC <br />
+        TX: <code class="bg-gray-200 px-1 rounded">018e0dae919e9216eb2626ba556cf2268ac904f550a15fc1b60bb29f55569a37</code></li>
+    </ul>
+    <p>These verified deposits tie Elina to the custody wallet conclusively.</p>
+  </section>
 
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, size, size);
-        ctx.drawImage(img, (size - img.width) / 2, (size - img.height) / 2);
+  <section class="mb-8">
+    <h3 class="text-lg font-semibold text-blue-700 mb-2">IV. Claimed Miner’s Fee Verification</h3>
+    <p>
+      BTCSG LTD claims to have paid a 0.83 BTC miner’s fee. However, the transaction:
+      <code class="bg-gray-200 px-2 py-1 rounded">0a12bf6c390ec21de53481243bff058f9cfcc8a589118c605e09303c741d5a28</code>
+      shows BTCSG LTD as the <strong>recipient</strong>, not the sender. This invalidates the claim.
+    </p>
+  </section>
 
-        const dataURL = canvas.toDataURL('image/png');
-        document.getElementById('preview').src = dataURL;
-        document.getElementById('downloadLink').href = dataURL;
-      };
-      img.src = URL.createObjectURL(blob);
-    }
-  </script>
+  <section class="mb-8">
+    <h3 class="text-lg font-semibold text-blue-700 mb-2">V. Asset Recovery Feasibility</h3>
+    <p>
+      Elina Chen’s 298 BTC is recoverable. Given prior misrepresentation, recovery should be executed
+      through on-chain escrow and legally binding agreements. Off-chain agreements are not advised.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h3 class="text-lg font-semibold text-blue-700 mb-2">VI. Services Provided</h3>
+    <ul class="list-disc list-inside space-y-1">
+      <li>Asset & transaction verification</li>
+      <li>Legally binding agreement coordination</li>
+      <li>On-chain escrow setup and monitoring</li>
+      <li>Litigation in case of agreement breach (Canada jurisdiction)</li>
+    </ul>
+    <p class="mt-2 text-sm text-gray-600">
+      We do <strong>not</strong> facilitate informal off-chain transactions or verbal recoveries.
+    </p>
+  </section>
+
+  <section class="mb-8">
+    <h3 class="text-lg font-semibold text-blue-700 mb-2">VII. Service Fee Breakdown</h3>
+    <p>Total Fee: <strong class="text-green-700">$2,220 CAD</strong></p>
+    <ul class="list-inside list-disc mt-2 space-y-1">
+      <li>Legally Binding Agreement Drafting – $680 CAD</li>
+      <li>On-Chain Escrow Setup & Monitoring – $720 CAD</li>
+      <li>Compliance & Third-Party Oversight – $470 CAD</li>
+      <li>Legal Communication & Documentation – $350 CAD</li>
+    </ul>
+  </section>
+
+  <footer class="text-center text-gray-500 text-xs mt-10 border-t pt-4">
+    &copy; 2025 TrustChain Global Corp. All rights reserved.
+  </footer>
+
 </body>
 </html>
