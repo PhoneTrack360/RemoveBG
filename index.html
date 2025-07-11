@@ -1,113 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TrustChain Global Corp - Asset Verification Report</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>BTC Flow Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans p-4 sm:p-8">
-
-  <!-- Header with Logo -->
-  <header class="flex flex-col sm:flex-row justify-between items-center mb-10 border-b pb-4">
-    <div class="flex items-center space-x-3">
-      <!-- Inline SVG Logo -->
-      <svg class="w-12 h-12 text-blue-600" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="4"/>
-        <path d="M30 50 L50 30 L70 50 L50 70 Z" fill="currentColor"/>
-        <text x="50%" y="90%" text-anchor="middle" font-size="10" fill="currentColor" font-family="Arial">TCGC</text>
-      </svg>
-      <div>
-        <h1 class="text-2xl font-bold text-blue-700">TrustChain Global Corp</h1>
-        <p class="text-sm text-gray-600">570 North Park Boulevard, Oakville ON L6M 0N7, Canada</p>
-        <p class="text-sm text-gray-600">Registration: 770891505RC0001 | Corp #: 13443787</p>
-      </div>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+  <div class="bg-gray-800 rounded-lg shadow-lg w-full max-w-xl p-6 space-y-6">
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-green-400"><i class="fas fa-chart-line"></i> BTC Flow Dashboard</h1>
+      <select id="tf" class="bg-gray-700 px-3 py-1 rounded text-sm" onchange="refresh()">
+        <option value="1h">1 Hour</option>
+        <option value="4h">4 Hours</option>
+        <option value="1d">1 Day</option>
+      </select>
     </div>
-    <div class="mt-4 sm:mt-0 text-sm text-right">
-      <p><strong>Date:</strong> July 8, 2025</p>
-      <p><strong>Prepared for:</strong> Elina Chen</p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center text-lg">
+      <div><i class="fas fa-dollar-sign text-green-400"></i> Price: <span id="price">--</span> <small id="change24h">--</small></div>
+      <div><i class="fas fa-clock text-yellow-400"></i> Timezone: Lagos</div>
     </div>
-  </header>
 
-  <!-- Title -->
-  <h2 class="text-xl sm:text-2xl font-semibold mb-6 text-center text-gray-800 uppercase">
-    Comprehensive Asset Verification Report
-  </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+      <div><i class="fas fa-tachometer-alt"></i> RSI: <span id="rsi">--</span></div>
+      <div><i class="fas fa-project-diagram"></i> MACD: <span id="macd">--</span></div>
+      <div><i class="fas fa-wave-square"></i> CCI: <span id="cci">--</span></div>
+      <div><i class="fas fa-forward"></i> Mom: <span id="momentum">--</span></div>
+      <div><i class="fas fa-sync-alt"></i> StochRSI: <span id="stochrsi">--</span></div>
+      <div><i class="fas fa-chart-bar"></i> Vol: <span id="volume">--</span></div>
+      <div><i class="fas fa-map-marker-alt"></i> Prev H/L: <span id="prevHigh">--</span>/<span id="prevLow">--</span></div>
+      <div><i class="fas fa-gem"></i> Pattern: <span id="pattern">--</span></div>
+    </div>
 
-  <!-- Section -->
-  <section class="mb-8">
-    <h3 class="text-lg font-semibold text-blue-700 mb-2">I. Overview</h3>
-    <p>
-      Following a structured due diligence and verification process conducted on July 4, 2025,
-      with BTCSG LTD, we confirm that Elina Chen’s custodial asset—298 BTC—is verifiably held
-      under BTCSG LTD’s control.
-    </p>
-  </section>
+    <div class="text-center text-2xl font-bold space-y-2">
+      <div>Prediction: <span id="prediction" class="font-bold text-yellow-400">NEUTRAL</span></div>
+      <div class="text-lg">Confidence: <span id="probability">--%</span></div>
+    </div>
 
-  <section class="mb-8">
-    <h3 class="text-lg font-semibold text-blue-700 mb-2">II. Wallet Verification</h3>
-    <p>
-      Verified BTC Custody Wallet Address: 
-      <code class="bg-gray-200 px-2 py-1 rounded">19oLGXykNUBj8f7w1tT9emuaEbaSFj1p27</code><br/>
-      Wallet Balance: <strong>5,630.89041667 BTC</strong> (confirmed via blockchain explorer).
-    </p>
-  </section>
+    <button onclick="refresh()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded text-white font-semibold">
+      <i class="fas fa-sync-alt"></i> Refresh
+    </button>
+  </div>
 
-  <section class="mb-8">
-    <h3 class="text-lg font-semibold text-blue-700 mb-2">III. Micro-Transaction Verification</h3>
-    <ul class="list-disc list-inside space-y-1">
-      <li>July 1, 2025 – 0.00003200 BTC <br />
-        TX: <code class="bg-gray-200 px-1 rounded">0a12bf6c390ec21de53481243bff058f9cfcc8a589118c605e09303c741d5a28</code></li>
-      <li>July 4, 2025 – 0.00003200 BTC <br />
-        TX: <code class="bg-gray-200 px-1 rounded">018e0dae919e9216eb2626ba556cf2268ac904f550a15fc1b60bb29f55569a37</code></li>
-    </ul>
-    <p>These verified deposits tie Elina to the custody wallet conclusively.</p>
-  </section>
+  <audio id="bullSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" preload="auto"></audio>
+  <audio id="bearSound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
 
-  <section class="mb-8">
-    <h3 class="text-lg font-semibold text-blue-700 mb-2">IV. Claimed Miner’s Fee Verification</h3>
-    <p>
-      BTCSG LTD claims to have paid a 0.83 BTC miner’s fee. However, the transaction:
-      <code class="bg-gray-200 px-2 py-1 rounded">0a12bf6c390ec21de53481243bff058f9cfcc8a589118c605e09303c741d5a28</code>
-      shows BTCSG LTD as the <strong>recipient</strong>, not the sender. This invalidates the claim.
-    </p>
-  </section>
+  <script>
+    const k1="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.", k2="eyJjbHVlIjoiNjg2Y2Y3YWU4MDZmZjE2NTFlMjhkYWJlIiwiaWF0IjoxNzUxOTcxNzU4LCJleHAi", k3="OjMzMjU2NDM1NzU4fQ.pMXqyFoJ0yCQuQjmT7i-66VNBFSQuEqvRi_oJNntWis";
+    const TAAPI = k1 + k2 + k3;
+    const sym="BTC/USDT"; let prevHigh, prevLow, lastAlert=0;
 
-  <section class="mb-8">
-    <h3 class="text-lg font-semibold text-blue-700 mb-2">V. Asset Recovery Feasibility</h3>
-    <p>
-      Elina Chen’s 298 BTC is recoverable. Given prior misrepresentation, recovery should be executed
-      through on-chain escrow and legally binding agreements. Off-chain agreements are not advised.
-    </p>
-  </section>
+    function speak(text) {
+      if (!window.speechSynthesis) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang='en-US'; speechSynthesis.speak(u);
+    }
 
-  <section class="mb-8">
-    <h3 class="text-lg font-semibold text-blue-700 mb-2">VI. Services Provided</h3>
-    <ul class="list-disc list-inside space-y-1">
-      <li>Asset & transaction verification</li>
-      <li>Legally binding agreement coordination</li>
-      <li>On-chain escrow setup and monitoring</li>
-      <li>Litigation in case of agreement breach (Canada jurisdiction)</li>
-    </ul>
-    <p class="mt-2 text-sm text-gray-600">
-      We do <strong>not</strong> facilitate informal off-chain transactions or verbal recoveries.
-    </p>
-  </section>
+    async function fetchTA(ind,tf) {
+      const res = await fetch(`https://api.taapi.io/${ind}?secret=${TAAPI}&exchange=binance&symbol=${sym}&interval=${tf}`);
+      const j = await res.json();
+      return j.value ?? j.valueMACDHist ?? j.valueCCI ?? j.valueMomentum ?? j.valueStochRSI ?? j.valueCandle ?? null;
+    }
 
-  <section class="mb-8">
-    <h3 class="text-lg font-semibold text-blue-700 mb-2">VII. Service Fee Breakdown</h3>
-    <p>Total Fee: <strong class="text-green-700">$2,220 CAD</strong></p>
-    <ul class="list-inside list-disc mt-2 space-y-1">
-      <li>Legally Binding Agreement Drafting – $680 CAD</li>
-      <li>On-Chain Escrow Setup & Monitoring – $720 CAD</li>
-      <li>Compliance & Third-Party Oversight – $470 CAD</li>
-      <li>Legal Communication & Documentation – $350 CAD</li>
-    </ul>
-  </section>
+    async function refresh() {
+      const tf = document.getElementById("tf").value;
 
-  <footer class="text-center text-gray-500 text-xs mt-10 border-t pt-4">
-    &copy; 2025 TrustChain Global Corp. All rights reserved.
-  </footer>
+      const tk = await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT").then(r => r.json());
+      const p = +tk.lastPrice, c = +tk.priceChangePercent;
+      document.getElementById("price").textContent = p.toFixed(2);
+      document.getElementById("change24h").textContent = c.toFixed(2) + "%";
+      document.getElementById("change24h").className = c >= 0 ? 'text-green-400' : 'text-red-400';
 
+      const inds = await Promise.all(
+        ["rsi","macd","cci","momentum","stochrsi","doji","engulfing","volume"].map(id => 
+          id === "doji" || id === "engulfing" || id === "volume" ? fetchTA(id, tf) : fetchTA(id, tf)
+        )
+      );
+      const [rsi, macd, cci, mom, stoch, doji, engulf, vol] = inds;
+      document.getElementById("rsi").textContent = rsi?.toFixed(2) ?? "--";
+      document.getElementById("macd").textContent = macd?.toFixed(2) ?? "--";
+      document.getElementById("cci").textContent = cci?.toFixed(2) ?? "--";
+      document.getElementById("momentum").textContent = mom?.toFixed(2) ?? "--";
+      document.getElementById("stochrsi").textContent = stoch?.toFixed(2) ?? "--";
+      document.getElementById("volume").textContent = vol?.toFixed(2) ?? "--";
+
+      let pt = "-";
+      if (+doji === 100) pt = "DOJI";
+      else if (+engulf === 100) pt = "ENGULF BULL";
+      else if (+engulf === -100) pt = "ENGULF BEAR";
+      document.getElementById("pattern").textContent = pt;
+
+      const kl = await fetch("https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=2").then(r => r.json());
+      prevHigh = +kl[0][2]; prevLow = +kl[0][3];
+      document.getElementById("prevHigh").textContent = prevHigh.toFixed(2);
+      document.getElementById("prevLow").textContent = prevLow.toFixed(2);
+
+      let bull=0,bear=0;
+      if (macd > 0) bull +=25; else bear += 25;
+      if (rsi > 55) bull +=15; else if (rsi < 45) bear += 15;
+      if (cci > 100) bull +=10; else if (cci < -100) bear += 10;
+      if (mom > 0) bull +=10; else bear += 10;
+      if (stoch < 20) bull +=5; else if (stoch > 80) bear += 5;
+      if (pt === "DOJI") bear +=5;
+      if (pt === "ENGULF BULL") bull +=15;
+      if (pt === "ENGULF BEAR") bear +=15;
+      if (vol > 0) bull +=5;
+      if (p > prevHigh) { bull +=20; levelAlert(p, prevHigh, 'High','bull'); }
+      if (p < prevLow) { bear +=20; levelAlert(p, prevLow, 'Low','bear'); }
+
+      const tot = bull + bear;
+      const prob = tot ? Math.round(Math.abs(bull - bear) / tot * 100) : 0;
+      const predEl = document.getElementById("prediction");
+      const probEl = document.getElementById("probability");
+
+      let pred = "NEUTRAL", col="text-yellow-400";
+      if (bull > bear && bull >= 50) { pred = "BULLISH"; col="text-green-400"; }
+      if (bear > bull && bear >= 50) { pred = "BEARISH"; col="text-red-400"; }
+
+      predEl.textContent = pred;
+      predEl.className = "font-bold " + col;
+      probEl.textContent = prob + "%";
+    }
+
+    function levelAlert(price, lvl, lbl, type) {
+      if (Math.abs(price - lvl) / lvl < 0.002 && Date.now() - lastAlert > 10000) {
+        document.getElementById(type === "bull" ? "bullSound" : "bearSound").play();
+        speak((type === "bull" ? "Bullish" : "Bearish") + " breakout at prev " + lbl);
+        lastAlert = Date.now();
+      }
+    }
+
+    refresh();
+  </script>
 </body>
 </html>
